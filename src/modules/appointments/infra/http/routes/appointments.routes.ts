@@ -20,12 +20,5 @@ appointmentsRouter.use(ensureAuthenticated); // aplica o middleware em todas as 
 
 appointmentsRouter.post('/', appointmentsController.create); // abstrair a lógica que tinha dentro da rota
 appointmentsRouter.get('/me', providerAppointmentsController.index); // abstrair a lógica que tinha dentro da rota
-appointmentsRouter.get('/jooj', (reqeust, response) => {
-  return response.json({ message: 'teste' });
-});
-
-appointmentsRouter.get('/me', (request, response) => {
-  return response.json({ message: 'testando' });
-});
 
 export default appointmentsRouter;

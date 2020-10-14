@@ -14,6 +14,9 @@ import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepo
 import IUserTokensRepository from '@modules/users/repositories/IUserTokensRepository';
 import UserTokensRepository from '@modules/users/infra/typeorm/repositories/UserTokensRepository';
 
+import INotificationsRepository from '@modules/notifications/repositories/INotificationsRepository';
+import NotificationsRepository from '@modules/notifications/infra/typeorm/repositories/NotificationsRepository';
+
 // register - toda vez que um arquivo diferente precisar do AppointmentsRepository, ele vai criar uma nova instância da classe do total zero
 // registerSingleton - instância essa classe apenas uma vez durante todo o ciclo de vida da app -  todos os services irão utilizar a mesma instância da classe
 container.registerSingleton<IAppointmentsRepository>( // vai garantir que a variável que estamos passando como segundo parâmetro tenha exatamente o formato da interface IAppointmentsRepository
@@ -29,4 +32,9 @@ container.registerSingleton<IUsersRepository>( // vai garantir que a variável q
 container.registerSingleton<IUserTokensRepository>( // vai garantir que a variável que estamos passando como segundo parâmetro tenha exatamente o formato da interface IUsersRepository
   'UserTokensRepository',
   UserTokensRepository,
+); // recebe o id/nome que eu quero utilizar para o repositório e o repositório a ser utilizado
+
+container.registerSingleton<INotificationsRepository>( // vai garantir que a variável que estamos passando como segundo parâmetro tenha exatamente o formato da interface IUsersRepository
+  'NotificationsRepository',
+  NotificationsRepository,
 ); // recebe o id/nome que eu quero utilizar para o repositório e o repositório a ser utilizado

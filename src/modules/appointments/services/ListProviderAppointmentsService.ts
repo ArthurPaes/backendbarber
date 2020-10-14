@@ -1,5 +1,4 @@
 import { injectable, inject } from 'tsyringe';
-import User from '@modules/users/infra/typeorm/models/User';
 
 import AppointmentFormat from '../infra/typeorm/models/appointments';
 import IAppointmentsRepository from '../repositories/IAppointmentRepository';
@@ -27,9 +26,9 @@ class ListProviderAppointmentsService {
     const appointments = await this.appointmentsRepository.findAllInDayOfProvider(
       {
         provider_id,
-        day: Number(day),
-        month: Number(month),
-        year: Number(year),
+        day,
+        month,
+        year,
       },
     );
 

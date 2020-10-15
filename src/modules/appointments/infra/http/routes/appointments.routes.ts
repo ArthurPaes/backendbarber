@@ -1,5 +1,5 @@
 import { Router } from 'express';
-// import AppointmentsRepository from '@modules/appointments/infra/typeorm/repositories/AppoitmentsRepository';  //removido após a injeção de dependência
+import { celebrate, Segments, Joi } from 'celebrate';
 
 import ensureAuthenticated from '@modules/users/infra/http/middlewares/ensureAuthenticated';
 import AppointmentsController from '../controllers/AppointmentsController';
@@ -18,7 +18,16 @@ appointmentsRouter.use(ensureAuthenticated); // aplica o middleware em todas as 
 //   return response.json(appointmentList);
 // });
 
-appointmentsRouter.post('/', appointmentsController.create); // abstrair a lógica que tinha dentro da rota
+appointmentsRouter.post(
+  '/',
+  celebrate({
+    [Segments.BODY]: {
+      provider_id: Joi.string().uuid().required(),
+      date: Joi.date(),
+    },
+  }),
+  appointmentsController.create,
+); // abstrair a lógica que tinha dentro da rota
 appointmentsRouter.get('/me', providerAppointmentsController.index); // abstrair a lógica que tinha dentro da rota
 
 export default appointmentsRouter;

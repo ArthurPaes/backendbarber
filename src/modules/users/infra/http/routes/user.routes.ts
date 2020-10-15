@@ -3,6 +3,7 @@ import multer from 'multer';
 import uploadConfig from '@config/upload';
 
 // import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository'; //removido após a injeção de dependência
+import { celebrate, Segments, Joi } from 'celebrate';
 import UsersController from '../controllers/UsersController';
 import UserAvatarController from '../controllers/UserAvatarController';
 import ensureAuthenticated from '../middlewares/ensureAuthenticated';
@@ -12,7 +13,17 @@ const usersController = new UsersController();
 const userAvatarController = new UserAvatarController();
 const upload = multer(uploadConfig); // instância do multer passando como parâmetro as configs do arquivo upload.ts
 
-usersRouter.post('/', usersController.create);
+usersRouter.post(
+  '/',
+  celebrate({
+    [Segments.BODY]: {
+      name: Joi.string().required(),
+      email: Joi.string().email().required(),
+      password: Joi.string().required(),
+    },
+  }),
+  usersController.create,
+);
 
 usersRouter.patch(
   '/avatar',

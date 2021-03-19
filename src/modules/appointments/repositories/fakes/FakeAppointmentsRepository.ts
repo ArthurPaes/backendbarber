@@ -13,9 +13,14 @@ class AppointmentsRepository implements IAppointmentsRepository {
 
   // Responsável por criar armazenar ler deletar editar os dados de appointment
 
-  public async findByDate(date: Date): Promise<AppointmentFormat | undefined> {
-    const findAppointent = this.appointments.find(appointment =>
-      isEqual(date, appointment.date),
+  public async findByDate(
+    date: Date,
+    provider_id: string,
+  ): Promise<AppointmentFormat | undefined> {
+    const findAppointent = this.appointments.find(
+      appointment =>
+        isEqual(date, appointment.date) &&
+        appointment.provider_id === provider_id,
     );
 
     return findAppointent;
